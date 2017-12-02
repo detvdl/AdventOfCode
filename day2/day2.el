@@ -27,8 +27,8 @@
     (catch 'break-loop
       (dolist (el1 element)
         (dolist (el2 element)
-          (let* ((min-val (min el1 el2))
-                 (max-val (max el1 el2)))
+          (let ((min-val (min el1 el2))
+                (max-val (max el1 el2)))
             (when (and (not (= el1 el2))
                        (= (mod max-val min-val) 0))
               (setq sum (+ sum (/ max-val min-val)))
