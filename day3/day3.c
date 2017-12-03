@@ -70,7 +70,6 @@ int main(int argc, char **argv)
 /* -- (-k - 1,            n - 4k^2 -9k - 5)   if 4(k+1)^2     < n <= 2(k+1)(2k+3) */
 /* with k = ceil(sqrt(n) - 1 / 2) */
 
-/* TODO: clean this up a little */
 struct index_2d *get_center_offset(int number)
 {
         struct index_2d *center_offset = (struct index_2d *) malloc(sizeof(*center_offset));
