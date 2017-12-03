@@ -15,6 +15,7 @@ struct vector_2d {
 
 /* Function declarations */
 struct index_2d *get_center_offset(int input);
+int get_manhattan_distance(int input);
 int get_sumspiral_larger(int input);
 
 int main(int argc, char **argv)
@@ -33,6 +34,10 @@ int main(int argc, char **argv)
         printf("Steps required to reach the access point: %d\n", steps);
 
         free(center_offset);
+
+        /* Puzzle 1 - alternative */
+        int steps_manh = get_manhattan_distance(input);
+        printf("Alternate steps calculation: %d\n", steps_manh);
 
         /* Puzzle 2 */
         int larger = get_sumspiral_larger(input);
@@ -73,7 +78,15 @@ int main(int argc, char **argv)
 struct index_2d *get_center_offset(int number)
 {
         struct index_2d *center_offset = (struct index_2d *) malloc(sizeof(*center_offset));
-        int k = (int) ceil((sqrt(number) - 1) / 2);
+        int k;
+        int l = (int) floor(sqrt(number));
+        if(l % 2 != 0) {
+                k = (l - 1) / 2;
+        } else if (number > l * (l + 1)) {
+                k = l / 2;
+        } else {
+                k = (l / 2) - 1;
+        }
         int t = 2 * k + 1;
         int m = pow(t, 2);
 
@@ -115,7 +128,7 @@ struct index_2d *get_center_offset(int number)
 /* | 362  747  806   --> ... | */
 /* --------------------------- */
 int get_sumspiral_larger(int number) {
-        int dim = ceil(sqrt(number));
+        int dim = (int) ceil(sqrt(sqrt(number)));
         /* Hacky way to circumvent out-of-bounds segfaults for small arrays */
         dim += 3;
 
@@ -123,7 +136,7 @@ int get_sumspiral_larger(int number) {
         center->row = (int) floor(dim/2);
         center->col = (dim % 2) == 0 ? (int) ceil(dim/2 - 1) : (int) floor(dim/2);
 
-        printf("Center point is at: (%d, %d)\n", center->row, center->col);
+        printf("Spiral dimensions:\nx:%d\ty:%d\nCenter point is at: (%d, %d)\n", dim, dim, center->row, center->col);
 
         struct vector_2d *delta = (struct vector_2d *) malloc(sizeof(*delta));
         delta->x = 1;
@@ -164,4 +177,19 @@ int get_sumspiral_larger(int number) {
         free(matrix);
 
         return value;
+}
+
+/* Extra: Easy way of solving puzzle 1 with Manhattan Distance */
+int get_manhattan_distance(int input) {
+        int base = (int) ceil(sqrt(input));
+
+        int side = (base % 2) == 0 ? base + 1 : base;
+        /* Steps from center to radius */
+        int steps = (side - 1) / 2;
+        /* Offset from previous radius */
+        int prev_offset = (int) floor(input - pow((side - 2), 2));
+        /* Side and element */
+        int center_offset = (side > 1) ? prev_offset % (side - 1) : 0;
+
+        return steps + abs(center_offset - steps);
 }
