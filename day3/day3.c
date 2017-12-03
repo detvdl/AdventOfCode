@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 /* The first n blocks now consist of sum(k=1->m) k = m*(m+1) steps */
 /* The k-th block is then R(2k+1) U(2k+1) L(2k+2) D(2k+2) */
 
-/* After n steps, there is a unique, event number 2k such that: */
+/* After n steps, there is a unique, even number 2k such that: */
 /* 2k*(2k+1) < n <= (2k+2)*(2k+3) */
 /* at which point we've gone through k blocks and an additional n - 2k*(2k+1) steps */
 /* This results in te following system of equations: */
@@ -116,6 +116,8 @@ struct index_2d *get_center_offset(int number)
 /* --------------------------- */
 int get_sumspiral_larger(int number) {
         int dim = ceil(sqrt(number));
+        /* Hacky way to circumvent out-of-bounds segfaults for small arrays */
+        dim += 3;
 
         struct index_2d *center = (struct index_2d *) malloc(sizeof(*center));
         center->row = (int) floor(dim/2);
@@ -136,7 +138,7 @@ int get_sumspiral_larger(int number) {
         int value = 1;
         matrix[center->row][center->col] = value;
 
-        while(value < number) {
+        while(!(value > number)) {
                 /* Directional chain is RULD */
                 /* So the sequence is [0, 1] -> [-1, 0] -> [0, -1] -> [1, 0] */
                 /* We switch directions every time we hit a corner/edge */
@@ -147,7 +149,6 @@ int get_sumspiral_larger(int number) {
                 }
                 x += delta->x;
                 y += delta->y;
-
                 int newx = center->row + x;
                 int newy = center->col + y;
                 if(-dim/2 < x && x <= dim/2 && -dim/2 < y && y <= dim/2) {
