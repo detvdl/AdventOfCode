@@ -21,6 +21,15 @@ method1() {
     echo "Puzzle 2: $valid_ana passphrases are valid!"
 }
 
+sort_word() {
+    word="$1"
+    sorted=$(
+        for(( i=0 ; i < ${#word} ; i++ )); do
+            echo "${word:i:1}"
+        done | sort | tr -d '\n')
+    echo "$sorted"
+}
+
 method2() {
     valid_dups=0; valid_ana=0
     while IFS='' read -r line || [[ -n "$line" ]]; do
@@ -33,11 +42,12 @@ method2() {
 
             # Puzzle 2
             if [[ (( br2 )) && (( br1 )) ]]; then
-                sort_word=$(echo "$word" | grep -o . | sort | tr -d "\n")
-                [[ "$sort_word" =~ $(echo ^\("${sorted[*]// /|}"\)$) ]] \
-                    &&  br2=0 || sorted+=("$sort_word")
+                # sort_word=$(echo "$word" | grep -o . | sort | tr -d "\n")
+                sorted_word=$(sort_word "$word")
+                [[ "$sorted_word" =~ $(echo ^\("${sorted[*]// /|}"\)$) ]] \
+                    &&  br2=0 || sorted+=("$sorted_word")
             fi
-            IFS=$' \t\n'
+            unset IFS
             !(( br1 )) && br2=$br1 && break
         done
         (( valid_dups+=br1 ))
