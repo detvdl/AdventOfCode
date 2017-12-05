@@ -80,28 +80,11 @@ int main(int argc, char **argv)
 struct index_2d *get_center_offset(int number)
 {
         struct index_2d *center_offset = (struct index_2d *) malloc(sizeof(*center_offset));
-        int k;
-        int l = (int) floor(sqrt(number));
-        if(l % 2 != 0) {
-                k = (l - 1) / 2;
-        } else if (number > l * (l + 1)) {
-                k = l / 2;
-        } else {
-                k = (l / 2) - 1;
-        }
+        int k = ceil((sqrt(number) - 1) / 2);
         int t = 2 * k + 1;
         int m = pow(t, 2);
 
         t -= 1;
-
-        if (number >= m - t) {
-                center_offset->row = k;
-                center_offset->col = k - (m - number);
-                return center_offset;
-        }
-
-        m -= t;
-
         if (number >= m - t) {
                 center_offset->row = k - (m - number);
                 center_offset->col = -k;
@@ -109,14 +92,20 @@ struct index_2d *get_center_offset(int number)
         }
 
         m -= t;
-
         if (number >= m - t) {
                 center_offset->row = -k;
                 center_offset->col = -k + (m - number);
                 return center_offset;
-        } else {
-                center_offset->row = -k - (m - number - t);
+        }
+
+        m -= t;
+        if (number >= m - t) {
+                center_offset->row = -k + (m - number);
                 center_offset->col = k;
+                return center_offset;
+        } else {
+                center_offset->row = k;
+                center_offset->col = k - (m - number - t);
                 return center_offset;
         }
 }
@@ -138,7 +127,8 @@ int get_sumspiral_larger(int number) {
         center->row = (int) floor(dim/2);
         center->col = (dim % 2) == 0 ? (int) ceil(dim/2 - 1) : (int) floor(dim/2);
 
-        printf("Spiral dimensions:\nx:%d\ty:%d\nCenter point is at: (%d, %d)\n", dim, dim, center->row, center->col);
+        printf("Spiral dimensions:\nx:%d\ty:%d\nCenter point is at: (%d, %d)\n",
+               dim, dim, center->row, center->col);
 
         struct vector_2d *delta = (struct vector_2d *) malloc(sizeof(*delta));
         delta->x = 1;
