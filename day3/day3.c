@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
+#include <string.h>
 
 /* Struct declarations */
 struct index_2d {
@@ -128,9 +130,9 @@ struct index_2d *get_center_offset(int number)
 /* | 362  747  806   --> ... | */
 /* --------------------------- */
 int get_sumspiral_larger(int number) {
-        int dim = (int) ceil(sqrt(sqrt(number)));
+        int dim = (int) 2 * ceil(log(number)/log(16));
         /* Hacky way to circumvent out-of-bounds segfaults for small arrays */
-        dim += 3;
+        if(number < 25) dim += 3;
 
         struct index_2d *center = (struct index_2d *) malloc(sizeof(*center));
         center->row = (int) floor(dim/2);
@@ -164,12 +166,24 @@ int get_sumspiral_larger(int number) {
                 y += delta->y;
                 int newx = center->row + x;
                 int newy = center->col + y;
-                if(-dim/2 < x && x <= dim/2 && -dim/2 < y && y <= dim/2) {
-                        value = matrix[newx-1][newy-1] + matrix[newx-1][newy] + matrix[newx-1][newy+1]
-                                + matrix[newx][newy-1] + matrix[newx][newy+1]
-                                + matrix[newx+1][newy-1] + matrix[newx+1][newy] + matrix[newx+1][newy+1];
-                        matrix[newx][newy] = value;
-                } else break;
+
+                /* Naive way to check out-of-bounds for surrounding square */
+                /* [-1, -1] [-1, 0] [-1, 1] */
+                /* [0, -1] @[0, 0]@ [0, 1] */
+                /* [1, -1]  [1, 0]  [1, 1] */
+                value = 0;
+                int ring[3];
+                memcpy(ring, (int []) { -1, 0, 1 }, sizeof(ring));
+                for(int j = 0; j < 3; j++) {
+                        for(int k = 0; k < 3; k++) {
+                                if(0 <= newx + ring[j] && newx + ring[j] < dim
+                                   && 0 <= newy + ring[k] && newy + ring[k] < dim)
+                                {
+                                        value += matrix[newx+ring[j]][newy+ring[k]];
+                                }
+                        }
+                }
+                matrix[newx][newy] = value;
         }
 
         free(center);
