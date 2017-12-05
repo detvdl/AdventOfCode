@@ -8,34 +8,29 @@ fn main() {
     let mut contents = String::new();
     bufread.read_to_string(&mut contents).unwrap();
 
-    let (jumps1, start) = parse_input(contents);
+    let jumps1 = parse_input(contents);
+    let start = 0;
     let jumps2 = jumps1.clone();
     
     let steps1 = count_steps_1(start, jumps1);
     println!("Puzzle 1: The amount of steps required to exit the maze is: {}", steps1);
 
     let steps2 = count_steps_2(start, jumps2);
-    println!("Puzzle 1: The amount of steps required to exit the maze is: {}", steps2);
+    println!("Puzzle 2: The amount of steps required to exit the maze is: {}", steps2);
 
 }
 
-fn parse_input(contents: String) -> (Vec<i32>, usize) {
+fn parse_input(contents: String) -> Vec<i32> {
     let mut parsed = Vec::new();
-    let mut start = 0;
     let split = contents.split("\n");
     for step in split {
         let val = step.parse();
         match val {
             Ok(v) => parsed.push(v),
-            Err(_) => {
-                let cur = step.trim_matches(|c| c == '(' || c == ')');
-                let cur: i32 = cur.parse().unwrap();
-                start = parsed.len();
-                parsed.push(cur);
-            }
+            Err(_) => {}
         }
     }
-    (parsed, start)
+    parsed
 }
 
 fn count_steps_1(start: usize, mut jumps: Vec<i32>) -> u32 {
