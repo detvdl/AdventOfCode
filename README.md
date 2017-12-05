@@ -4,4 +4,5 @@
 - [x] Day 2: Emacs-lisp
 - [x] Day 3: C
 - [x] Day 4: Bash
+- [x] Day 5: Rust
 - [ ] ...
