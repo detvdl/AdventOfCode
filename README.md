@@ -6,4 +6,5 @@
 - [x] Day 4: Bash
 - [x] Day 5: Rust
 - [x] Day 6: Clojure
+- [x] Day 7: Java
 - [ ] ...
