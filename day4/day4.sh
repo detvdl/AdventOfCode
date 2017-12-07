@@ -16,10 +16,11 @@ method1() {
         # Puzzle 1
         trline=$(echo "$line" | tr "[:blank:]" " " | tr " " "\n")
         [ $(sort -u <<< "$trline" | wc -l) -eq $(wc -l <<< "$trline") ] && (( valid_dups++ ))
+        # or
+        # [ ! $(echo "$line" | tr " " "\n" | sort | uniq -D) ] && (( valid_dups ++ ))
 
         for word in $line; do
             # Puzzle 2
-            # sort_word=$(echo "$word" | grep -o . | sort | tr -d "\n")
             sorted_word=$(sort_word "$word")
             sorted+="$sorted_word "
         done
@@ -56,7 +57,7 @@ method2() {
     done < "$1"
     echo "Puzzle 1: $valid_dups passphrases are valid!"
     echo "Puzzle 2: $valid_ana passphrases are valid!"
-}
+    }
 
 if [ "$#" -ne 1 ]; then
     echo "ERROR: Please provide the input filename as parameter..."
