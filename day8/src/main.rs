@@ -10,11 +10,13 @@ fn main() {
     let reader = BufReader::new(file);
     let mut registers: HashMap<String, isize> = HashMap::new();
     let mut max = 0;
+    let mut temp_max = String::new();
+
     for line in reader.lines() {
         let mut instr = line.unwrap();
         let mut instr: Vec<&str> = instr.split(" ").collect();
         if let &[op_lval, op, op_rval, "if", cond_l, cond, cond_r] = &instr[..] {
-            let &cond_l: &isize = registers.entry(cond_l.to_owned()).or_insert(0);
+            let &cond_l: &isize = registers.entry(cond_l.to_string()).or_insert(0);
             let op_r: isize = op_rval.parse::<isize>().unwrap();
             let cond_r: isize = cond_r.parse::<isize>().unwrap();
 
@@ -27,9 +29,9 @@ fn main() {
                 ">=" => cond_l >= cond_r,
                 _ => false,
             };
-            
+
             if condition {
-                let mut op_l: &mut isize = registers.entry(op_lval.to_owned()).or_insert(0);
+                let mut op_l: &mut isize = registers.entry(op_lval.to_string()).or_insert(0);
                 match &op[..] {
                     "dec" => *op_l -= op_r,
                     "inc" => *op_l += op_r,
@@ -39,8 +41,13 @@ fn main() {
                     max = *op_l;
                 }
             }
+            if registers.get(op_lval).unwrap_or(&0) > registers.get(&temp_max).unwrap_or(&0) {
+                temp_max = op_lval.to_string();
+            }
         }
     }
+    println!("Max value at end: {}", registers.get(&temp_max).unwrap_or(&0));
+    // or the easier
     println!("Max value at end: {}", registers.values().max().unwrap_or(&0));
-    println!("Max value while running: {}", max);
+    println!("Max value during execution: {}", max);
 }
