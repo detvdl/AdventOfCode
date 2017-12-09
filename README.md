@@ -8,4 +8,5 @@
 - [x] Day 6: Clojure
 - [x] Day 7: Java
 - [x] Day 8: Ugly Rust with nightly features because that's totally a different language
+- [x] Day 9: Ruby
 - [ ] ...
