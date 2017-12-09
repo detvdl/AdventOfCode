@@ -1,14 +1,17 @@
 line = File.read("input")
-
-garbage = line.gsub!(/\!.{1}/, '').gsub!(/\<([^\>]*)\>/).inject(0) { |v,_| v += $+.length }
-groups = Array.new
+count = 0
 val = 0
+
+garbage = line.gsub!(/\!.{1}/, '')
+            .gsub!(/\<([^\>]*)\>/)
+            .inject(0){ |acc| acc += $+.length }
+
 line.chars.each do |char|
   if char == '{'
-    groups.push("{")
+    count += 1
   elsif char == '}'
-    val += groups.length
-    groups.pop()
+    val += count
+    count -= 1
   end
 end
 puts "The total value of the groups is #{val}."
