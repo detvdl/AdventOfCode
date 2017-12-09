@@ -1,11 +1,9 @@
 line = File.read("input")
 
-cancelled = line.gsub(/\!.{1}/, '')
-garb_count = 0
-garbage = cancelled.gsub(/\<([^\>]*)\>/) { garb_count += $+.length; '' }
+garbage = line.gsub!(/\!.{1}/, '').gsub!(/\<([^\>]*)\>/).inject(0) { |v,_| v += $+.length }
 groups = Array.new
 val = 0
-garbage.chars.each do |char|
+line.chars.each do |char|
   if char == '{'
     groups.push("{")
   elsif char == '}'
@@ -14,4 +12,4 @@ garbage.chars.each do |char|
   end
 end
 puts "The total value of the groups is #{val}."
-puts "The total garbage count is #{garb_count}."
+puts "The total garbage count is #{garbage}."
