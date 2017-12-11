@@ -11,8 +11,7 @@
                  "sw" {:x -1 :y -1} "nw" {:x -1 :y 1}})
 
 (defn merge-coords [dir coords]
-  (let [vec (get directions dir)]
-    (merge-with + coords vec)))
+  (merge-with + coords (get directions dir)))
 
 (defn vec-abs [vec]
   (map #(Math/abs %) vec))
