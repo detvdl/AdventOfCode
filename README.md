@@ -11,4 +11,5 @@
 - [x] Day 9: Ruby
 - [x] Day 10: Python
 - [x] Day 11: Clojure
+- [x] Day 12: Clojure
 - [ ] ...
