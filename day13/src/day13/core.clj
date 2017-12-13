@@ -28,7 +28,7 @@
   (apply + (map #(apply * %) (filter #(caught? % 0) layers))))
 
 (defn solve2 [layers]
-  (first (filter some? (map #(if (avoid-all? layers %) %) (range)))))
+  (first (filter #(avoid-all? layers %) (range))))
 
 (defn solve2-anonfn [layers]
   (some (fn [delay]
