@@ -31,10 +31,10 @@
   (first (filter #(avoid-all? layers %) (range))))
 
 (defn solve2-anonfn [layers]
-  (some (fn [delay]
-          (when (not-any? (fn [step] (caught? step delay)) layers)
-            delay))
-        (range)))
+(some (fn [delay]
+        (when (not-any? (fn [step] (caught? step delay)) layers)
+          delay))
+      (range)))
 
 (defn -main [& args]
   (let [layers (parse-input "input")]
