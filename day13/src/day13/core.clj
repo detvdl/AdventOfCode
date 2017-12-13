@@ -13,18 +13,19 @@
 (defn avoid-all? [steps delay]
   (not-any? #(caught? % delay) steps))
 
-(defn solve1 [path]
-  (let [layers (parse-input path)]
-    (reduce #(if (caught? %2 0)
-               (+ %1 (r/fold * %2))
-               %1)
-            0
-            layers)))
+(defn solve1 [layers]
+  (reduce #(if (caught? %2 0)
+             (+ %1 (r/fold * %2))
+             %1)
+          0
+          layers))
 
-(defn solve2 [path]
-  (let [layers (parse-input path)]
-    (first (filter some? (map #(if (avoid-all? layers %) %) (range))))))
+(defn solve1-filter [layers]
+  (apply + (map #(apply * %) (filter #(caught? % 0) layers))))
+
+(defn solve2 [layers]
+  (first (filter some? (map #(if (avoid-all? layers %) %) (range)))))
 
 (defn -main [& args]
-  {:part1 (solve1 "input")
-   :part2 (solve2 "input")})
+  (let [layers (parse-input "input")]
+    {:part1 (solve1 layers) :part2 (solve2 layers)}))
