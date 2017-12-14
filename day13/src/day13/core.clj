@@ -20,7 +20,7 @@
           0
           layers))
 
-(def xf (comp (filter #(caught? % 0)) (map #(apply * %))))
+(def xf (comp (map #(apply * %)) (partial filter #(caught? % 0))))
 (defn solve1-trans [layers]
   (transduce xf + layers))
 
@@ -31,11 +31,12 @@
   (first (filter #(avoid-all? layers %) (range))))
 
 (defn solve2-anonfn [layers]
-(some (fn [delay]
-        (when (not-any? (fn [step] (caught? step delay)) layers)
-          delay))
-      (range)))
+  (some (fn [delay]
+          (when (not-any? (fn [step] (caught? step delay)) layers)
+            delay))
+        (range)))
 
 (defn -main [& args]
   (let [layers (parse-input "input")]
-    {:part1 (solve1 layers) :part2 (solve2 layers)}))
+    {:part1 (solve1-trans layers) :part2 (solve2 layers)}))
+(-main)
