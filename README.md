@@ -14,4 +14,5 @@
 - [x] Day 12: Clojure
 - [x] Day 13: Advent of Clojure
 - [x] Day 14: Clojure Bells
+- [x] Day 15: It's beginning to look a lot like Clojure
 - [ ] ...
