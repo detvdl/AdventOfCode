@@ -13,7 +13,8 @@
 - [x] Day 11: Clojure
 - [x] Day 12: Clojure
 - [x] Day 13: Advent of Clojure
-- [x] Day 14: Clojure Bells
+- [x] Day 14: Clojure bells, Clojure bells, Clojure all the way
 - [x] Day 15: It's beginning to look a lot like Clojure
-- [x] Day 16: Clojure bells, clojure bells, clojure all the way
+- [x] Day 16: Clojure, the jvm'ed lisp-deer
+- [x] Day 17: It's Clojure time in hell
 - [ ] ...
