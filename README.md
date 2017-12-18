@@ -17,4 +17,5 @@
 - [x] Day 15: It's beginning to look a lot like Clojure
 - [x] Day 16: Clojure, the jvm'ed lisp-deer
 - [x] Day 17: It's Clojure time in hell
+- [x] Day 18: I'm dreaming of an async Clojure
 - [ ] ...
