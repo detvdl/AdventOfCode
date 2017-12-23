@@ -21,3 +21,4 @@
 - [x] Day 19: Oh Clojurebaum, oh Clojurebaum
 - [x] Day 20: Clojure Claus is coming to town
 - [ ] ...
+- [ ] Day 23: You better `watch` out
