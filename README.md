@@ -20,5 +20,8 @@
 - [x] Day 18: I'm dreaming of an async Clojure
 - [x] Day 19: Oh Clojurebaum, oh Clojurebaum
 - [x] Day 20: Clojure Claus is coming to town
-- [ ] ...
-- [ ] Day 23: You better `watch` out
+- [x] Day 21: You better `watch` out
+- [x] Day 22: You better `not` cry
+- [x] Day 23: You better `not` pout
+- [x] Day 24: I'm telling you `why`
+- [x] Day 25: Clojure Claus is coming to town!
