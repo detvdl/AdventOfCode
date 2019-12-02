@@ -29,7 +29,7 @@ main :: IO()
 main = do
   input <- readFile "input.txt"
   let lst = Seq.fromList . map (read::String->Int) . splitOn "," $ input
-  putStrLn . show . fromJust . runProg (12, 2) $ lst
+  print . fromJust . runProg (12, 2) $ lst
   let (noun, verb) = fromJust . listToMaybe $ [x | x <- liftA2 (,) [0..99] [0..99]
                                                  , Just 19690720 <- [runProg x lst]]
-  putStrLn . show $ ((100 * noun) + verb)
+  print ((100 * noun) + verb)

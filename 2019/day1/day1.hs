@@ -11,5 +11,5 @@ main = do
   content <- readFile "input.txt"
   let contentLines = lines content
   let intLines = map (\x -> read x::Integer) contentLines
-  putStrLn . show . foldl (+) 0 . map fuel $ intLines
-  putStrLn . show . foldl (+) 0 . map exhaust $ intLines
+  print . sum . map fuel $ intLines
+  print . sum . map exhaust $ intLines
