@@ -6,7 +6,7 @@ import Control.Applicative (liftA2)
 import Data.Maybe
 import Data.List.Split
 
-{-# LANGUAGE ViewPatterns, PatternSynonyms #-}
+{-# LANGUAGE ViewPatterns #-}
 
 intCode :: Int -> Seq Int -> Seq  Int
 intCode pos xs = case Seq.lookup pos xs of
