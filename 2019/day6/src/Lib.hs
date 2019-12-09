@@ -2,13 +2,13 @@ module Lib
     ( solve
     ) where
 
-import Data.MultiMap (MultiMap)
-import qualified Data.MultiMap as MM
-import qualified Data.Tree as T
-import Data.Tree (Tree(..))
-import Data.Maybe
-import Control.Monad
-import Control.Applicative
+import           Control.Applicative
+import           Control.Monad
+import           Data.Maybe
+import           Data.MultiMap       (MultiMap)
+import qualified Data.MultiMap       as MM
+import           Data.Tree           (Tree (..))
+import qualified Data.Tree           as T
 
 type Orbit = (String, String)
 
@@ -55,9 +55,9 @@ findLca' d x y (Node p (l:[])) = findLca' (d + 1) x y l
 findLca' d x y (Node p (l:r:_)) =
   case (findLca' (d + 1) x y l, findLca' (d + 1) x y r) of
     (Nothing, Nothing) -> Nothing
-    (Just _, Just _) -> Just (p, d)
-    (Nothing, Just u) -> Just u
-    (Just u, Nothing) -> Just u
+    (Just _, Just _)   -> Just (p, d)
+    (Nothing, Just u)  -> Just u
+    (Just u, Nothing)  -> Just u
 
 solve :: IO ()
 solve = do
